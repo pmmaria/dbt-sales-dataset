@@ -1,0 +1,25 @@
+version: 2
+
+models:
+  - name: stg_sales
+    description: The stg_sales model transforms the src_sales source table, selecting and renaming specific columns to provide a user-friendly schema. It includes details about sales orders, product information, and customer details.
+
+    columns:
+      - name: order_id
+        description: The identifier for each sales order.
+        tests:
+          - not_null
+      - name: order_date
+        description: The date the sales order was placed.
+        tests:
+          - not_null
+      - name: product_id
+        description: The identifier for each product.
+        tests:
+          - not_null
+      - name: status
+        description: The status of the sales order.
+        tests:
+          - accepted_values:
+              values: ['Shipped', 'In Process', 'Cancelled', 'On Hold', 'Resolved', 'Disputed']
+        

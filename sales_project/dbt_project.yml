@@ -1,0 +1,32 @@
+name: 'sales_project'
+version: '1.0.0'
+
+
+profile: 'sales_project'
+
+model-paths: ["models"]
+analysis-paths: ["analyses"]
+test-paths: ["tests"]
+seed-paths: ["seeds"]
+macro-paths: ["macros"]
+snapshot-paths: ["snapshots"]
+
+clean-targets:
+  - "target"
+  - "dbt_packages"
+
+models:
+  sales_project:
+    staging:
+      +materialized: table
+      +dataset: staging
+    fact:
+      +materialized: table
+      +dataset: fact
+    dim:
+      +materialized: table
+      +dataset: dim
+
+dispatch:
+  - macro_namespace: dbt_utils
+    search_order: ['dbt_utils', 'dbt']
