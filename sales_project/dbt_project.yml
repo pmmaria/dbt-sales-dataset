@@ -26,6 +26,9 @@ models:
     dim:
       +materialized: table
       +dataset: dim
+    mart:
+      +materialized: table
+      +dataset: mart
 
 dispatch:
   - macro_namespace: dbt_utils
