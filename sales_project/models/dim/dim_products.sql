@@ -3,7 +3,7 @@ WITH stg_sales AS (
 )
 SELECT
     product_id,
-    price_unit_corrected,
+    unit_price_corrected,
     product_category,
     msrp
 FROM stg_sales
