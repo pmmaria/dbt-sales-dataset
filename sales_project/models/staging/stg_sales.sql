@@ -10,7 +10,7 @@ SELECT
     orderlinenumber as order_line_number,
     {{ dbt_utils.generate_surrogate_key(['orderlinenumber', 'ordernumber']) }} AS order_line_id,  -- Order line surrogate key
     sales as total_sales, 
-    orderdate as order_date,
+    date(orderdate) as order_date,
     status as order_status,
     qtr_id,
     month_id,
