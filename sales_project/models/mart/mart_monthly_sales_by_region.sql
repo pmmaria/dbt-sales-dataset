@@ -3,7 +3,6 @@ customer_region AS (
     SELECT
         customer_id,
         customer_country,
-        customer_state,
         customer_city
     FROM {{ ref('dim_customer') }}
 ),
@@ -12,7 +11,7 @@ sales_agg AS (
     SELECT
         order_date,
         customer_id,
-        SUM(total_sales) AS total_sales,
+        round(SUM(total_sales), 2) AS total_sales,
         COUNT(DISTINCT order_id) AS total_orders,
         SUM(quantity_ordered) AS total_quantity_ordered,
         COUNT(DISTINCT customer_id) AS distinct_customers
@@ -22,20 +21,15 @@ sales_agg AS (
 dates AS (
     SELECT
         date_day,
-        day_of_week_name,
-        day_of_month,
         month_name,
         year_number
     FROM {{ ref('dim_date') }}
 )
 SELECT
-    d.date_day,
-    d.day_of_week_name,
-    d.day_of_month,
+    DATE_TRUNC(d.date_day, MONTH) AS month_start_date,
     d.month_name,
     d.year_number,
     c.customer_country,
-    c.customer_state,
     c.customer_city,
     s.total_orders,
     s.total_quantity_ordered,
@@ -47,4 +41,4 @@ JOIN dates d
 ON s.order_date = d.date_day
 JOIN customer_region c
 ON s.customer_id = c.customer_id
-ORDER BY d.date_day
+ORDER BY month_start_date
