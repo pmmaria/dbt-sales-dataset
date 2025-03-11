@@ -1,20 +1,17 @@
--- This SQL script performs the following operations:
--- 1. Creates a CTE (Common Table Expression) named 'raw_data' that selects all columns from the 'src_sales' table in the 'raw_data' source.
--- 2. Selects and renames specific columns from the 'raw_data' CTE to create a more readable and meaningful dataset.
-
 WITH raw_data AS (
     SELECT * FROM {{ source('raw_data', 'src_sales') }}
 )
 
 SELECT
     ordernumber AS order_id,
-    quantityordered as quantity,
-    round(sales/nullif(quantityordered, 0), 2) as price_unit_corrected,
-    priceeach as price_unit,
+    quantityordered as quantity_ordered,
+    round(sales/nullif(quantityordered, 0), 2) as unit_price_corrected,
+    priceeach as unit_price,
     orderlinenumber as order_line_number,
-    sales, 
-    orderdate as order_date,
-    status,
+    {{ dbt_utils.generate_surrogate_key(['orderlinenumber', 'ordernumber']) }} AS order_line_id,  -- Order line surrogate key
+    sales as total_sales, 
+    date(orderdate) as order_date,
+    status as order_status,
     qtr_id,
     month_id,
     year_id,
@@ -35,4 +32,3 @@ SELECT
     contactfirstname as customer_contact_firstname,
     dealsize as deal_size
 FROM raw_data
-

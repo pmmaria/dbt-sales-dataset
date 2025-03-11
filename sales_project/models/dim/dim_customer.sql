@@ -1,7 +1,7 @@
 WITH stg_sales AS (
-    SELECT * FROM {{ ref('sales_project', 'stg_sales') }}
+    SELECT * FROM {{ ref('stg_sales') }}
 )
-SELECT
+SELECT DISTINCT
     customer_id, 
     customer_name, 
     customer_phone,
