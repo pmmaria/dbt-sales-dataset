@@ -54,19 +54,24 @@ The goal of this project is to extract, clean, transform, and aggregate raw sale
    ```bash
    git clone https://github.com/pmmaria/dbt-sales-dataset.git
 
-2. **Install dependencies**: Make sure DBT is installed, and install the necessary dependencies:
+2. **Install Python dendencies**: Make sure DBT and DBT-Bigquery are installed:
 
     ```bash
     pip install -r requirements.txt
     
-3. **Configure DBT profile**: Configure your DBT profile to connect to the target database (BigQuery in this case). Ensure the `profiles.yml` file is correctly set up with the necessary credentials.
+3. **Install dbt dependencies specified in `packages.yml`:**
 
-4. **Run DBT models**: After setting up the configuration, you can run the DBT models with the following command:
+    ```bash
+    dbt deps
+
+4. **Configure DBT profile**: Configure your DBT profile to connect to the target database (BigQuery in this case). Ensure the `profiles.yml` file is correctly set up with the necessary credentials.
+
+5. **Run DBT models**: After setting up the configuration, you can run the DBT models with the following command:
 
     ```bash
     dbt run
 
-5. **Run DBT tests**: After running the models, it's important to test the integrity of the data:
+6. **Run DBT tests**: After running the models, it's important to test the integrity of the data:
 
     ```bash
     dbt test 
