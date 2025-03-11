@@ -20,6 +20,7 @@ dates AS (
 )
 
 SELECT 
+    DATE_TRUNC(d.date_day, MONTH) AS month_start_date,
     d.date_day,
     d.day_of_week_name,
     d.day_of_month,
@@ -27,7 +28,7 @@ SELECT
     d.year_number,
     s.total_orders,
     s.total_quantity_ordered,
-    s.total_sales,
+    round(s.total_sales, 2) AS total_sales,
     ROUND(s.total_sales / NULLIF(s.total_quantity_ordered, 0), 2) AS average_order_value,   
     s.distinct_customers
 FROM sales_agg s

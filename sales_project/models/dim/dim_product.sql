@@ -3,7 +3,8 @@ WITH stg_sales AS (
 )
 SELECT
     product_id,
-    unit_price_corrected,
     product_category,
-    msrp
+    msrp,
+    round(avg(unit_price_corrected), 2) as avg_unit_price 
 FROM stg_sales
+GROUP BY product_id, product_category, msrp

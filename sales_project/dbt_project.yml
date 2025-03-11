@@ -18,13 +18,13 @@ clean-targets:
 models:
   sales_project:
     staging:
-      +materialized: table
-      +dataset: staging
+      +materialized: view
+      +dataset: stg
     fact:
       +materialized: table
-      +dataset: fact
+      +dataset: fct
     dim:
-      +materialized: table
+      +materialized: view
       +dataset: dim
     mart:
       +materialized: table
